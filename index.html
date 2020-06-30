@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Weather Dashboard</title>
     <link rel="stylesheet" href="bootstrap.min.css" />
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 </head>
 
 <body>
@@ -17,7 +19,7 @@
         <div class="row">
             <div class="col-md-4">
                 <form class="form-inline">
-                    <input class="form-control" type="text" placeholder="Search">
+                    <input class="form-control" id="searchTerm" type="text" placeholder="Search">
                     <button class="btn btn-secondary" type="submit">Search</button>
                     <div class="card text-white bg-primary mb-3" style="width: 100%;">
                         <div class="card-header">Search History</div>
@@ -28,8 +30,18 @@
                     </div>
                 </form>
             </div>
+
             <div class="col-md-8">
-                
+                <div class="card" style="width: 100%;">
+                    <h2 class="m-1" id="title">This is a City and date</h2>
+                    <h3 class="m-1" id="temp">Temp</h3>
+                    <h3 class="m-1" id="hum">Humidity</h3>
+                    <h3 class="m-1" id="wind">Wind Speed</h3>
+                    <h3 class="m-1" id="uv">UV index</h3>
+                </div>
+                <div class="card" style="width: 100%;">
+
+                </div>
             </div>
         </div>
     </div>
