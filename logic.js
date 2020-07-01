@@ -13,7 +13,7 @@ function searchHistory() {
     for (i = 0; i < searches.length; i++) {
         var search = $("<button>");
         search.text(searches[i])
-        search.attr("class", "btn btn-danger mb-1 searchList");
+        search.attr("class", "btn btn-info mb-1 searchList");
         search.attr("type", "button");
         search.attr("data-term", searches[i]);
         search.attr("style", "width: 100%");
@@ -29,7 +29,6 @@ function currentWeather(term) {
         url: queryURL,
         method: "GET"
     }).then(function (response) {
-        console.log(response);
         //save searches
         searches.push(response.name);
         var unique = [];
@@ -48,11 +47,9 @@ function currentWeather(term) {
         //get infor for current weather and display
         var temp = (response.main.temp - 273.15) * 1.80 + 32;
         var imgURL = "http://openweathermap.org/img/wn/"+response.weather[0].icon+"@2x.png";
-        console.log(imgURL);
         $("#title").text(response.name + " " + today);
         var currentIcon = $('#currentIcon');
         currentIcon.attr("src",imgURL)
-        console.log(currentIcon);
         $("#temp").html("Temperature: " + temp.toFixed(2) + " &#176;F");
         $("#hum").text("Humidity: " + response.main.humidity + "%");
         $("#wind").text("Wind speed: " + response.wind.speed + "MPH");
@@ -63,7 +60,24 @@ function currentWeather(term) {
             url: queryURL,
             method: "GET"
         }).then(function (response) {
-            $("#uv").text("UV Index: " + response.value);
+            $("#uv").text(response.value);
+            var value = response.value;
+            console.log(value)
+            if (value<=2){
+                $("#uv").attr("class","btn btn-success");
+            }
+            else if (value<=5){
+                $("#uv").attr("class","btn btn-primary");
+            }
+            else if (value<=7){     
+                $("#uv").attr("class","btn btn-warning");
+            }
+            else if (value>=8){
+                $("#uv").attr("class","btn btn-danger");
+            }
+            else{
+                console.log(error);
+            }
         });
     });
 }
@@ -86,7 +100,6 @@ function forecast(term) {
             $("#hum" + j).html("Humidity: " + hum + "%");
             $("#date" + j).html(date);
             
-            console.log(response);
             var imgURL = "http://openweathermap.org/img/wn/"+response.list[i].weather[0].icon+".png";
             var currentIcon = $('#icon'+j);
             currentIcon.attr("src",imgURL);
@@ -107,7 +120,6 @@ $(".btn-secondary").on("click", function (event) {
 });
 
 $(".card-body").on("click", function () {
-    console.log("hello");
     if (event.target.matches(".btn")) {
         var term = event.target;
         term = term.getAttribute("data-term");
