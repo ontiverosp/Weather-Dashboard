@@ -45,31 +45,31 @@ function currentWeather(term) {
         var mm = String(today.getMonth() + 1).padStart(2, '0');
         var yyyy = today.getFullYear();
         today = '(' + mm + '/' + dd + '/' + yyyy + ')';
-        console.log(today);
         //get infor for current weather and display
         var temp = (response.main.temp - 273.15) * 1.80 + 32;
-        console.log(temp);
+        var imgURL = "http://openweathermap.org/img/wn/"+response.weather[0].icon+"@2x.png";
+        console.log(imgURL);
         $("#title").text(response.name + " " + today);
+        var currentIcon = $('#currentIcon');
+        currentIcon.attr("src",imgURL)
+        console.log(currentIcon);
         $("#temp").html("Temperature: " + temp.toFixed(2) + " &#176;F");
         $("#hum").text("Humidity: " + response.main.humidity + "%");
         $("#wind").text("Wind speed: " + response.wind.speed + "MPH");
         var lat = response.coord.lat;
         var lon = response.coord.lon;
-        console.log(lat);
-        console.log(lon);
         queryURL = "https://api.openweathermap.org/data/2.5/uvi?appid=eaf6bb01cac6c92c0bc6a9beb7ad33a8&lat=" + lat + "&lon=" + lon;
         $.ajax({
             url: queryURL,
             method: "GET"
         }).then(function (response) {
-            console.log(response);
             $("#uv").text("UV Index: " + response.value);
         });
     });
 }
 
 function forecast(term) {
-    //runs search for the current weather
+    //runs search for the forecasted weather
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + term + "&appid=eaf6bb01cac6c92c0bc6a9beb7ad33a8"
 
     $.ajax({
@@ -85,6 +85,12 @@ function forecast(term) {
             $("#temp" + j).html("Temp: " + temp.toFixed(2) + "&#176;F");
             $("#hum" + j).html("Humidity: " + hum + "%");
             $("#date" + j).html(date);
+            
+            console.log(response);
+            var imgURL = "http://openweathermap.org/img/wn/"+response.list[i].weather[0].icon+".png";
+            var currentIcon = $('#icon'+j);
+            currentIcon.attr("src",imgURL);
+
             j++;
         }
 
